@@ -1,0 +1,15 @@
+{
+    "pruner": {
+        "type": "HyperbandPruner",
+        "keyword": {
+            "min_resource": 1,
+            "reduction_factor": 5
+        }
+    },
+    "sampler": {
+        "type": "TPESampler",
+        "keyword": {
+            "n_startup_trials": 5
+        }
+    }
+}
