@@ -39,10 +39,28 @@ def optimize_hyperparameters(args: argparse.Namespace) -> None:
         executor = AllenNLPExecutor(trial, config_file, optuna_serialization_dir)
         return executor.run()
 
+    if os.path.isfile(args.optuna_params_path):
+        optuna_config = json.load(open(args.optuna_params_path))
+    else:
+        optuna_config = {}
+
+    if "pruner" in optuna_config:
+        pruner_class = getattr(optuna.pruners, optuna_config["pruner"]["type"])
+        pruner = pruner_class(**optuna_config["pruner"]["keyword"])
+    else:
+        pruner = None
+
+    if "sampler" in optuna_config:
+        sampler_class = getattr(optuna.samplers, optuna_config["sampler"]["type"])
+        sampler = sampler_class(optuna_config["sampler"]["keyword"])
+    else:
+        sampler = None
+
     study = optuna.create_study(
         direction="maximize",
         storage="sqlite:///allennlp.db",
-        pruner=optuna.pruners.HyperbandPruner(),
+        pruner=pruner,
+        sampler=sampler,
     )
 
     objective = partial(
@@ -70,6 +88,13 @@ class AllenOpt(Subcommand):
             type=str,
             help="path to hyperparameter file",
             default="hyper_params.json",
+        )
+
+        subparser.add_argument(
+            "-c",
+            "--optuna-params-path",
+            type=str,
+            help="path to Optuna config",
         )
 
         subparser.add_argument(
