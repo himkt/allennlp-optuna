@@ -1,3 +1,3 @@
-from allenopt.commands import *  # noqa
+import allenopt.commands  # noqa
 
 __version__ = "0.0.1"
