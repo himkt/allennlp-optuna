@@ -7,7 +7,7 @@ which to write the results.
 import argparse
 import json
 import logging
-import os.path
+import os
 from functools import partial
 
 import optuna
@@ -23,7 +23,16 @@ logger = logging.getLogger(__name__)
 def optimize_hyperparameters(args: argparse.Namespace) -> None:
     config_file = args.param_path
     hparam_path = args.hparam_path
+    optuna_param_path = args.optuna_param_path
     serialization_dir = args.serialization_dir
+
+    direction = args.direction
+    n_trials = args.n_trials
+    timeout = args.timeout
+    study_name = args.study_name
+    storage = args.storage
+
+    os.makedirs(serialization_dir, exist_ok=True)
 
     def _objective(
         trial: Trial,
@@ -39,8 +48,8 @@ def optimize_hyperparameters(args: argparse.Namespace) -> None:
         executor = AllenNLPExecutor(trial, config_file, optuna_serialization_dir)
         return executor.run()
 
-    if os.path.isfile(args.optuna_params_path):
-        optuna_config = json.load(open(args.optuna_params_path))
+    if optuna_param_path is not None and os.path.isfile(optuna_param_path):
+        optuna_config = json.load(open(optuna_param_path))
     else:
         optuna_config = {}
 
@@ -57,8 +66,9 @@ def optimize_hyperparameters(args: argparse.Namespace) -> None:
         sampler = None
 
     study = optuna.create_study(
-        direction="maximize",
-        storage="sqlite:///allennlp.db",
+        study_name=study_name,
+        direction=direction,
+        storage=storage,
         pruner=pruner,
         sampler=sampler,
     )
@@ -67,7 +77,7 @@ def optimize_hyperparameters(args: argparse.Namespace) -> None:
         _objective,
         hparam_path=hparam_path,
     )
-    study.optimize(objective, n_trials=50, timeout=600)
+    study.optimize(objective, n_trials=n_trials, timeout=timeout)
 
 
 @Subcommand.register("allenopt")
@@ -91,18 +101,56 @@ class AllenOpt(Subcommand):
         )
 
         subparser.add_argument(
-            "-c",
-            "--optuna-params-path",
+            "--optuna-param-path",
             type=str,
             help="path to Optuna config",
         )
 
         subparser.add_argument(
-            "-s",
             "--serialization-dir",
             required=True,
             type=str,
             help="directory in which to save the model and its logs",
+        )
+
+        # ---- Optuna -----
+
+        subparser.add_argument(
+            "--direction",
+            type=str,
+            choices=("minimize", "maximize"),
+            default="minimize",
+            help="Set direction of optimization to a new study. Set 'minimize' "
+            "for minimization and 'maximize' for maximization.",
+        )
+
+        subparser.add_argument(
+            "--n-trials",
+            type=int,
+            help="The number of trials. If this argument is not given, as many "
+            "trials run as possible.",
+            default=50,
+        )
+
+        subparser.add_argument(
+            "--timeout",
+            type=float,
+            help="Stop study after the given number of second(s). If this argument"
+            " is not given, as many trials run as possible.",
+        )
+
+        subparser.add_argument(
+            "--study-name", default=None, help="The name of the study to start optimization on."
+        )
+
+        subparser.add_argument(
+            "--storage",
+            type=str,
+            help=(
+                "The path to storage. AllenOpt supports a valid URL"
+                "for sqlite3, mysql, postgresql, or redis."
+            ),
+            default="sqlite:///allenopt.db",
         )
 
         subparser.set_defaults(func=optimize_hyperparameters)
