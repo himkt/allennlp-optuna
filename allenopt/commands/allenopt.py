@@ -13,9 +13,9 @@ from functools import partial
 import optuna
 from allennlp.commands.subcommand import Subcommand
 from optuna import Trial
+from optuna import load_study
 from optuna.integration import AllenNLPExecutor
 from overrides import overrides
-
 
 logger = logging.getLogger(__name__)
 
@@ -81,6 +81,13 @@ def optimize_hyperparameters(args: argparse.Namespace) -> None:
     study.optimize(objective, n_trials=n_trials, timeout=timeout)
 
 
+def export_hyperparameters(args: argparse.Namespace) -> None:
+    storage = args.storage
+    study_name = args.study_name
+    study = optuna.load_study(study_name=study_name, storage=storage)
+    print(" ".join("{}={}".format(k, v) for k, v in study.best_params.items()))
+
+
 @Subcommand.register("allenopt")
 class AllenOpt(Subcommand):
     @overrides
@@ -128,8 +135,7 @@ class AllenOpt(Subcommand):
         subparser.add_argument(
             "--n-trials",
             type=int,
-            help="The number of trials. If this argument is not given, as many "
-            "trials run as possible.",
+            help="The number of trials. If this argument is not given, as many " "trials run as possible.",
             default=50,
         )
 
@@ -148,8 +154,7 @@ class AllenOpt(Subcommand):
             "--storage",
             type=str,
             help=(
-                "The path to storage. AllenOpt supports a valid URL"
-                "for sqlite3, mysql, postgresql, or redis."
+                "The path to storage. AllenOpt supports a valid URL" "for sqlite3, mysql, postgresql, or redis."
             ),
             default="sqlite:///allenopt.db",
         )
@@ -162,4 +167,28 @@ class AllenOpt(Subcommand):
         )
 
         subparser.set_defaults(func=optimize_hyperparameters)
+        return subparser
+
+
+@Subcommand.register("allenopt-export")
+class AllenOptExport(Subcommand):
+    @overrides
+    def add_subparser(self, parser: argparse._SubParsersAction) -> argparse.ArgumentParser:
+        description = """Export best hyperparameters in the trials."""
+        subparser = parser.add_parser(self.name, description=description, help="Export best hyperparameters.")
+
+        subparser.add_argument(
+            "--study-name", default=None, help="The name of the study to start optimization on."
+        )
+
+        subparser.add_argument(
+            "--storage",
+            type=str,
+            help=(
+                "The path to storage. AllenOpt supports a valid URL" "for sqlite3, mysql, postgresql, or redis."
+            ),
+            default="sqlite:///allenopt.db",
+        )
+
+        subparser.set_defaults(func=export_hyperparameters)
         return subparser
