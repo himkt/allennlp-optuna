@@ -28,6 +28,7 @@ def optimize_hyperparameters(args: argparse.Namespace) -> None:
 
     direction = args.direction
     n_trials = args.n_trials
+    n_jobs = args.n_jobs
     timeout = args.timeout
     study_name = args.study_name
     storage = args.storage
@@ -78,7 +79,7 @@ def optimize_hyperparameters(args: argparse.Namespace) -> None:
         _objective,
         hparam_path=hparam_path,
     )
-    study.optimize(objective, n_trials=n_trials, timeout=timeout)
+    study.optimize(objective, n_trials=n_trials, n_jobs=n_jobs, timeout=timeout)
 
 
 def export_hyperparameters(args: argparse.Namespace) -> None:
@@ -165,6 +166,13 @@ class AllenOpt(Subcommand):
             help="The metrics you want to optimize.",
             default="best_validation_loss",
         )
+
+        subparser.add_argument(
+            "--n-jobs",
+            type=int,
+            help="The number of jobs.",
+            default=1,
+            )
 
         subparser.set_defaults(func=optimize_hyperparameters)
         return subparser
