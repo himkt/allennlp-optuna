@@ -31,6 +31,7 @@ def optimize_hyperparameters(args: argparse.Namespace) -> None:
     timeout = args.timeout
     study_name = args.study_name
     storage = args.storage
+    metrics = args.metrics
 
     os.makedirs(serialization_dir, exist_ok=True)
 
@@ -45,7 +46,7 @@ def optimize_hyperparameters(args: argparse.Namespace) -> None:
             suggest(**hparam["keyword"])
 
         optuna_serialization_dir = os.path.join(serialization_dir, "trial_{}".format(trial.number))
-        executor = AllenNLPExecutor(trial, config_file, optuna_serialization_dir)
+        executor = AllenNLPExecutor(trial, config_file, optuna_serialization_dir, metrics=metrics)
         return executor.run()
 
     if optuna_param_path is not None and os.path.isfile(optuna_param_path):
@@ -151,6 +152,13 @@ class AllenOpt(Subcommand):
                 "for sqlite3, mysql, postgresql, or redis."
             ),
             default="sqlite:///allenopt.db",
+        )
+
+        subparser.add_argument(
+            "--metrics",
+            type=str,
+            help="The metrics you want to optimize.",
+            default="best_validation_loss",
         )
 
         subparser.set_defaults(func=optimize_hyperparameters)
