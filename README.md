@@ -48,11 +48,6 @@ Please see the [example](./config/hparams.json) in detail.
 
 You can choose pruners and samplers implemented in Optuna here.
 
-The [example](./config/optuna.json) shows the usage of allenopt with `Hyperband` [1] and `TPESampler` [2].
-
-
-## Reference
-
-[1] Li+, [Hyperband: A Novel Bandit-Based Approach to Hyperparameter Optimization](https://jmlr.org/papers/v18/16-558.html), 2018, JMLR.
-
-[2] Bergstra+, [Algorithms for Hyper-Parameter Optimization](https://papers.nips.cc/paper/4443-algorithms-for-hyper-parameter-optimization), 2011, Proceedings of NIPS.
+The [example](./config/optuna.json) shows the usage of allenopt with
+[`Hyperband`](https://jmlr.org/papers/v18/16-558.html) and
+[`TPESampler`](https://papers.nips.cc/paper/4443-algorithms-for-hyper-parameter-optimization).
