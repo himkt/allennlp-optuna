@@ -25,7 +25,7 @@ Remember casting external variables to desired types by `std.parseInt`, `std.par
 
 ```jsonnet
 local lr = 0.1;  // before
-
+↓↓↓
 local lr = std.parseJson(std.extVar('lr'));  // after
 ```
 
