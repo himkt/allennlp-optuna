@@ -13,7 +13,6 @@ from functools import partial
 import optuna
 from allennlp.commands.subcommand import Subcommand
 from optuna import Trial
-from optuna import load_study
 from optuna.integration import AllenNLPExecutor
 from overrides import overrides
 
@@ -26,6 +25,7 @@ def optimize_hyperparameters(args: argparse.Namespace) -> None:
     optuna_param_path = args.optuna_param_path
     serialization_dir = args.serialization_dir
 
+    load_if_exists = args.skip_if_exists
     direction = args.direction
     n_trials = args.n_trials
     timeout = args.timeout
@@ -72,6 +72,7 @@ def optimize_hyperparameters(args: argparse.Namespace) -> None:
         storage=storage,
         pruner=pruner,
         sampler=sampler,
+        load_if_exists=load_if_exists,
     )
 
     objective = partial(
@@ -122,6 +123,14 @@ class AllenOpt(Subcommand):
         )
 
         # ---- Optuna -----
+
+        subparser.add_argument(
+            "--skip-if-exists",
+            default=False,
+            action="store_true",
+            help="If specified, the creation of the study is skipped "
+            "without any error when the study name is duplicated.",
+        )
 
         subparser.add_argument(
             "--direction",
