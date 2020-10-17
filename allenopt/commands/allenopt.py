@@ -179,7 +179,7 @@ class AllenOpt(Subcommand):
         return subparser
 
 
-@Subcommand.register("allenopt-export")
+@Subcommand.register("best-params")
 class AllenOptExport(Subcommand):
     @overrides
     def add_subparser(self, parser: argparse._SubParsersAction) -> argparse.ArgumentParser:
