@@ -1,51 +1,51 @@
 [
-    {
-        "type": "int",
-        "keyword": {
-            "name": "embedding_dim",
-            "low": 64,
-            "high": 128
-        }
-    },
-    {
-        "type": "int",
-        "keyword": {
-            "name": "max_filter_size",
-            "low": 2,
-            "high": 5
-        }
-    },
-    {
-        "type": "int",
-        "keyword": {
-            "name": "num_filters",
-            "low": 64,
-            "high": 256
-        }
-    },
-    {
-        "type": "int",
-        "keyword": {
-            "name": "output_dim",
-            "low": 64,
-            "high": 256
-        }
-    },
-    {
-        "type": "float",
-        "keyword": {
-            "name": "dropout",
-            "low": 0.0,
-            "high": 0.5
-        }
-    },
-    {
-        "type": "float",
-        "keyword": {
-            "name": "lr",
-            "low": 5e-3,
-            "high": 5e-1,
-            "log": true
-        }
+  {
+    "type": "int",
+    "attributes": {
+      "name": "embedding_dim",
+      "low": 64,
+      "high": 128
     }
+  },
+  {
+    "type": "int",
+    "attributes": {
+      "name": "max_filter_size",
+      "low": 2,
+      "high": 5
+    }
+  },
+  {
+    "type": "int",
+    "attributes": {
+      "name": "num_filters",
+      "low": 64,
+      "high": 256
+    }
+  },
+  {
+    "type": "int",
+    "attributes": {
+      "name": "output_dim",
+      "low": 64,
+      "high": 256
+    }
+  },
+  {
+    "type": "float",
+    "attributes": {
+      "name": "dropout",
+      "low": 0.0,
+      "high": 0.5
+    }
+  },
+  {
+    "type": "float",
+    "attributes": {
+      "name": "lr",
+      "low": 5e-3,
+      "high": 5e-1,
+      "log": true
+    }
+  }
 ]

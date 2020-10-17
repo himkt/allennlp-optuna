@@ -43,7 +43,7 @@ def optimize_hyperparameters(args: argparse.Namespace) -> None:
         for hparam in json.load(open(hparam_path)):
             attr_type = hparam["type"]
             suggest = getattr(trial, "suggest_{}".format(attr_type))
-            suggest(**hparam["keyword"])
+            suggest(**hparam["attributes"])
 
         optuna_serialization_dir = os.path.join(serialization_dir, "trial_{}".format(trial.number))
         executor = AllenNLPExecutor(trial, config_file, optuna_serialization_dir, metrics=metrics)
@@ -56,13 +56,13 @@ def optimize_hyperparameters(args: argparse.Namespace) -> None:
 
     if "pruner" in optuna_config:
         pruner_class = getattr(optuna.pruners, optuna_config["pruner"]["type"])
-        pruner = pruner_class(**optuna_config["pruner"]["keyword"])
+        pruner = pruner_class(**optuna_config["pruner"]["attributes"])
     else:
         pruner = None
 
     if "sampler" in optuna_config:
         sampler_class = getattr(optuna.samplers, optuna_config["sampler"]["type"])
-        sampler = sampler_class(optuna_config["sampler"]["keyword"])
+        sampler = sampler_class(optuna_config["sampler"]["attributes"])
     else:
         sampler = None
 
