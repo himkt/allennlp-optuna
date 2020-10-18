@@ -125,7 +125,7 @@ The example of [optuna.json](./config/optuna.json) looks like:
 
 
 ```shell
-poetry run allennlp allenopt \
+poetry run allennlp tune \
     config/imdb_optuna.jsonnet \
     config/hparams.json \
     --optuna-config config/optuna.json \
@@ -156,10 +156,10 @@ poetry run allennlp retrain \
 
 you can run optimizations in parallel.
 You can easily run distributed optimization by adding an option
-`--skip-if-exists` to `allennlp allenopt` command.
+`--skip-if-exists` to `allennlp tune` command.
 
 ```
-poetry run allennlp allenopt \
+poetry run allennlp tune \
     config/imdb_optuna.jsonnet \
     config/hparams.json \
     --optuna-config config/optuna.json \
@@ -176,7 +176,7 @@ For example, if you want to use MySQL as a storage,
 the command should be like following:
 
 ```
-poetry run allennlp allenopt \
+poetry run allennlp tune \
     config/imdb_optuna.jsonnet \
     config/hparams.json \
     --optuna-config config/optuna.json \
