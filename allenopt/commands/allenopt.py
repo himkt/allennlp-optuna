@@ -9,9 +9,12 @@ import json
 import logging
 import os
 from functools import partial
+from typing import Any
+from typing import Dict
 
 import optuna
 from allennlp.commands.subcommand import Subcommand
+from allennlp.commands.train import train_model_from_args
 from optuna import Trial
 from optuna.integration import AllenNLPExecutor
 from overrides import overrides
@@ -19,7 +22,7 @@ from overrides import overrides
 logger = logging.getLogger(__name__)
 
 
-def optimize_hyperparameters(args: argparse.Namespace) -> None:
+def optimize(args: argparse.Namespace) -> None:
     config_file = args.param_path
     hparam_path = args.hparam_path
     optuna_param_path = args.optuna_param_path
@@ -82,11 +85,21 @@ def optimize_hyperparameters(args: argparse.Namespace) -> None:
     study.optimize(objective, n_trials=n_trials, timeout=timeout)
 
 
-def export_hyperparameters(args: argparse.Namespace) -> None:
-    storage = args.storage
-    study_name = args.study_name
+def fetch_best_params(storage: str, study_name: str) -> Dict[str, Any]:
     study = optuna.load_study(study_name=study_name, storage=storage)
-    print(" ".join("{}={}".format(k, v) for k, v in study.best_params.items()))
+    return study.best_params
+
+
+def show_best_params(args: argparse.Namespace) -> None:
+    best_params = fetch_best_params(args.storage, args.study_name)
+    print(" ".join("{}={}".format(k, v) for k, v in best_params.items()))
+
+
+def train_model_from_args_with_optuna(args: argparse.Namespace):
+    # Set hyperparameters
+    for k, v in fetch_best_params(args.storage, args.study_name).items():
+        os.environ[k] = str(v)
+    train_model_from_args(args)
 
 
 @Subcommand.register("allenopt")
@@ -175,7 +188,7 @@ class AllenOpt(Subcommand):
             default="best_validation_loss",
         )
 
-        subparser.set_defaults(func=optimize_hyperparameters)
+        subparser.set_defaults(func=optimize)
         return subparser
 
 
@@ -199,5 +212,91 @@ class AllenOptExport(Subcommand):
             default="sqlite:///allenopt.db",
         )
 
-        subparser.set_defaults(func=export_hyperparameters)
+        subparser.set_defaults(func=show_best_params)
+        return subparser
+
+
+@Subcommand.register("retrain")
+class Train(Subcommand):
+    @overrides
+    def add_subparser(self, parser: argparse._SubParsersAction) -> argparse.ArgumentParser:
+        description = (
+            """Train the specified model on the specified dataset using hyperparameters found by Optuna."""
+        )
+        subparser = parser.add_parser(self.name, description=description, help="Train a model.")
+
+        subparser.add_argument(
+            "param_path", type=str, help="path to parameter file describing the model to be trained"
+        )
+
+        subparser.add_argument(
+            "-s",
+            "--serialization-dir",
+            required=True,
+            type=str,
+            help="directory in which to save the model and its logs",
+        )
+
+        subparser.add_argument(
+            "-r",
+            "--recover",
+            action="store_true",
+            default=False,
+            help="recover training from the state in serialization_dir",
+        )
+
+        subparser.add_argument(
+            "-f",
+            "--force",
+            action="store_true",
+            required=False,
+            help="overwrite the output directory if it exists",
+        )
+
+        subparser.add_argument(
+            "-o",
+            "--overrides",
+            type=str,
+            default="",
+            help=(
+                "a json(net) structure used to override the experiment configuration, e.g., "
+                "'{\"iterator.batch_size\": 16}'.  Nested parameters can be specified either"
+                " with nested dictionaries or with dot syntax."
+            ),
+        )
+
+        subparser.add_argument(
+            "--node-rank", type=int, default=0, help="rank of this node in the distributed setup"
+        )
+
+        subparser.add_argument(
+            "--dry-run",
+            action="store_true",
+            help=(
+                "do not train a model, but create a vocabulary, show dataset statistics and "
+                "other training information"
+            ),
+        )
+        subparser.add_argument(
+            "--file-friendly-logging",
+            action="store_true",
+            default=False,
+            help="outputs tqdm status on separate lines and slows tqdm refresh rate",
+        )
+
+        # Optuna
+        subparser.add_argument(
+            "--study-name", default=None, help="The name of the study to start optimization on."
+        )
+
+        subparser.add_argument(
+            "--storage",
+            type=str,
+            help=(
+                "The path to storage. AllenOpt supports a valid URL" "for sqlite3, mysql, postgresql, or redis."
+            ),
+            default="sqlite:///allenopt.db",
+        )
+
+        subparser.set_defaults(func=train_model_from_args_with_optuna)
         return subparser
