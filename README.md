@@ -128,7 +128,7 @@ The example of [optuna.json](./config/optuna.json) looks like:
 poetry run allennlp tune \
     config/imdb_optuna.jsonnet \
     config/hparams.json \
-    --optuna-config config/optuna.json \
+    --optuna-param-path config/optuna.json \
     --serialization-dir result \
     --study-name test
 ```
@@ -162,7 +162,7 @@ You can easily run distributed optimization by adding an option
 poetry run allennlp tune \
     config/imdb_optuna.jsonnet \
     config/hparams.json \
-    --optuna-config config/optuna.json \
+    --optuna-param-path config/optuna.json \
     --serialization-dir result \
     --study-name test \
     --skip-if-exists
@@ -179,7 +179,7 @@ the command should be like following:
 poetry run allennlp tune \
     config/imdb_optuna.jsonnet \
     config/hparams.json \
-    --optuna-config config/optuna.json \
+    --optuna-param-path config/optuna.json \
     --serialization-dir result \
     --study-name test \
     --storage mysql://<user_name>:<passwd>@<db_host>/<db_name> \
