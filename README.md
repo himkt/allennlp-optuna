@@ -95,7 +95,7 @@ you can see the available parameters in [suggest\_float](https://optuna.readthed
 Please see the [example](./config/hparams.json) in detail.
 
 
-## 1.3 [Optional] Specify Optuna configurations
+### 1.3 [Optional] Specify Optuna configurations
 
 You can choose a pruner/sample implemented in Optuna.
 To specify a pruner/sampler, create a JSON config file
@@ -121,7 +121,7 @@ The example of [optuna.json](./config/optuna.json) looks like:
 ```
 
 
-## 1.4 Optimize hyperparameters by allennlp cli
+### 1.4 Optimize hyperparameters by allennlp cli
 
 
 ```shell
@@ -130,8 +130,7 @@ poetry run allennlp allenopt \
     config/hparams.json \
     --optuna-config config/optuna.json \
     --serialization-dir result \
-    --study-name test \
-    --storage sqlite:///allenopt.db
+    --study-name test
 ```
 
 
@@ -140,7 +139,6 @@ poetry run allennlp allenopt \
 ```shell
 poetry run allennlp best-params \
     --study-name test
-    --storage sqlite:///allenopt.db
 ```
 
 
@@ -150,6 +148,47 @@ poetry run allennlp best-params \
 poetry run allennlp retrain \
     config/imdb_optuna.jsonnet \
     --serialization-dir retrain_result \
-    --study-name test \
-    --storage sqlite:///allenopt
+    --study-name test
 ```
+
+
+## 4. Hyperparameter optimization at scale!
+
+you can run optimizations in parallel.
+You can easily run distributed optimization by adding an option
+`--skip-if-exists` to `allennlp allenopt` command.
+
+```
+poetry run allennlp allenopt \
+    config/imdb_optuna.jsonnet \
+    config/hparams.json \
+    --optuna-config config/optuna.json \
+    --serialization-dir result \
+    --study-name test \
+    --skip-if-exists
+```
+
+AllenOpt uses SQLite as a default storage for storing results.
+You can easily run distributed optimization **over machines**
+by using MySQL or PostgreSQL as a storage.
+
+For example, if you want to use MySQL as a storage,
+the command should be like following:
+
+```
+poetry run allennlp allenopt \
+    config/imdb_optuna.jsonnet \
+    config/hparams.json \
+    --optuna-config config/optuna.json \
+    --serialization-dir result \
+    --study-name test \
+    --storage mysql://<user_name>:<passwd>@<db_host>/<db_name> \
+    --skip-if-exists
+```
+
+You can run the above command on each machine to
+run multi-node distributed optimization.
+
+If you want to know about a mechanism of Optuna distributed optimization,
+please see the official documentation:
+https://optuna.readthedocs.io/en/stable/tutorial/004_distributed.html
