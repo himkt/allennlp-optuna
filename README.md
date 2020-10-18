@@ -142,3 +142,14 @@ poetry run allennlp best-params \
     --study-name test
     --storage sqlite:///allenopt.db
 ```
+
+
+## 3. Retrain a model with optimized hyperparameters
+
+```shell
+poetry run allennlp retrain \
+    config/imdb_optuna.jsonnet \
+    --serialization-dir retrain_result \
+    --study-name test \
+    --storage sqlite:///allenopt
+```
