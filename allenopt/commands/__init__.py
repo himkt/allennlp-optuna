@@ -1,1 +1,1 @@
-from allenopt.commands.allenopt import AllenOpt  # noqa
+from allenopt.commands import allenopt  # noqa

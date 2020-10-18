@@ -102,7 +102,7 @@ def train_model_from_args_with_optuna(args: argparse.Namespace):
     train_model_from_args(args)
 
 
-@Subcommand.register("allenopt")
+@Subcommand.register("tune")
 class AllenOpt(Subcommand):
     @overrides
     def add_subparser(self, parser: argparse._SubParsersAction) -> argparse.ArgumentParser:
