@@ -97,14 +97,32 @@ Please see the [example](./config/hparams.json) in detail.
 
 ## 1.3 [Optional] Specify Optuna configurations
 
-If you want to specify some Optuna specific configurations
-(such as sampling algorithms or pruning algorithms),
-it is possible to use `--optuna-config` option.
+You can choose a pruner/sample implemented in Optuna.
+To specify a pruner/sampler, create a JSON config file
 
-The example of [optuna.json](./config/optuna.json) shows the usage of allenopt with
+The example of [optuna.json](./config/optuna.json) looks like:
+
+```json
+{
+    "pruner": {
+        "type": "HyperbandPruner",
+        "attributes": {
+            "min_resource": 1,
+            "reduction_factor": 5
+        }
+    },
+    "sampler": {
+        "type": "TPESampler",
+        "attributes": {
+            "n_startup_trials": 5
+        }
+    }
+}
+```
 
 
 ## 1.4 Optimize hyperparameters by allennlp cli
+
 
 ```shell
 poetry run allennlp allenopt \
