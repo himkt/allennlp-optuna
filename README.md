@@ -1,4 +1,4 @@
-# AllenOpt: AllenNLP subcommand for hyperparameter optimization
+# AllenNLP subcommand for hyperparameter optimization
 
 
 ## 0. Install
