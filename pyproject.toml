@@ -9,8 +9,8 @@ authors = ["himkt <himkt@cookpad.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.6.1"
-optuna = {git = "https://github.com/optuna/optuna", rev = "master"}
 allennlp = ">=1.0.0"
+optuna = "^2.2.0"
 
 [tool.poetry.dev-dependencies]
 black = "^20.8b1"
