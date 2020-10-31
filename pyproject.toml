@@ -3,9 +3,10 @@ line-length = 115  # same as allennlp
 
 [tool.poetry]
 name = "allennlp_optuna"
-version = "0.1.0"
-description = ""
-authors = ["himkt <himkt@cookpad.com>"]
+version = "0.1.1"
+description = "AllenNLP integration for hyperparameter optimization"
+authors = ["himkt <himkt@klis.tsukuba.ac.jp>"]
+readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.6.1"
