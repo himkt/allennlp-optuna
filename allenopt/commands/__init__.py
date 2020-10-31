@@ -1,1 +1,1 @@
-from allenopt.commands import allenopt  # noqa
+from allennlp_optuna.commands import allennlp_optuna  # noqa

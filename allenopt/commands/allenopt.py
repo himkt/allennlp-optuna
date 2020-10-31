@@ -178,7 +178,7 @@ class AllenOpt(Subcommand):
             help=(
                 "The path to storage. AllenOpt supports a valid URL" "for sqlite3, mysql, postgresql, or redis."
             ),
-            default="sqlite:///allenopt.db",
+            default="sqlite:///allennlp_optuna.db",
         )
 
         subparser.add_argument(
@@ -209,7 +209,7 @@ class AllenOptExport(Subcommand):
             help=(
                 "The path to storage. AllenOpt supports a valid URL" "for sqlite3, mysql, postgresql, or redis."
             ),
-            default="sqlite:///allenopt.db",
+            default="sqlite:///allennlp_optuna.db",
         )
 
         subparser.set_defaults(func=show_best_params)
@@ -295,7 +295,7 @@ class Train(Subcommand):
             help=(
                 "The path to storage. AllenOpt supports a valid URL" "for sqlite3, mysql, postgresql, or redis."
             ),
-            default="sqlite:///allenopt.db",
+            default="sqlite:///allennlp_optuna.db",
         )
 
         subparser.set_defaults(func=train_model_from_args_with_optuna)

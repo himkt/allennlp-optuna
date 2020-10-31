@@ -4,7 +4,7 @@
 ## 0. Install
 
 ```
-pip install allenopt @ https://github.com/himkt/allenopt.git@master
+pip install allennlp_optuna @ https://github.com/himkt/allennlp_optuna.git@master
 ```
 
 

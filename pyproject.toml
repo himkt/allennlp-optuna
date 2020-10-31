@@ -2,7 +2,7 @@
 line-length = 115  # same as allennlp
 
 [tool.poetry]
-name = "allenopt"
+name = "allennlp_optuna"
 version = "0.1.0"
 description = ""
 authors = ["himkt <himkt@cookpad.com>"]
