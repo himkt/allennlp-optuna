@@ -1,17 +1,22 @@
 # AllenNLP subcommand for hyperparameter optimization
 
 
-## 0. Install
+## 0. Documentation
+
+You can read the documentation on [readthedocs](https://allennlp-optuna.readthedocs.io/).
+
+
+## 1. Install
 
 ```
 pip install allennlp_optuna
 ```
 
 
-## 1. Optimization
+## 2. Optimization
 
 
-### 1.1 AllenNLP config
+### 2.1 AllenNLP config
 
 Model configuration written in Jsonnet.
 
@@ -27,7 +32,7 @@ local lr = std.parseJson(std.extVar('lr'));  // after
 For more information, please refer to [AllenNLP Guide](https://guide.allennlp.org/hyperparameter-optimization).
 
 
-### 1.2 Define hyperparameter search speaces
+### 2.2 Define hyperparameter search speaces
 
 You can define search space in Json.
 
@@ -95,7 +100,7 @@ you can see the available parameters in [suggest\_float](https://optuna.readthed
 Please see the [example](./config/hparams.json) in detail.
 
 
-### 1.3 [Optional] Specify Optuna configurations
+### 2.3 [Optional] Specify Optuna configurations
 
 You can choose a pruner/sample implemented in Optuna.
 To specify a pruner/sampler, create a JSON config file
@@ -104,24 +109,24 @@ The example of [optuna.json](./config/optuna.json) looks like:
 
 ```json
 {
-    "pruner": {
-        "type": "HyperbandPruner",
-        "attributes": {
-            "min_resource": 1,
-            "reduction_factor": 5
-        }
-    },
-    "sampler": {
-        "type": "TPESampler",
-        "attributes": {
-            "n_startup_trials": 5
-        }
+  "pruner": {
+    "type": "HyperbandPruner",
+    "attributes": {
+      "min_resource": 1,
+      "reduction_factor": 5
     }
+  },
+  "sampler": {
+    "type": "TPESampler",
+    "attributes": {
+      "n_startup_trials": 5
+    }
+  }
 }
 ```
 
 
-### 1.4 Optimize hyperparameters by allennlp cli
+### 2.4 Optimize hyperparameters by allennlp cli
 
 
 ```shell
@@ -134,7 +139,7 @@ poetry run allennlp tune \
 ```
 
 
-## 2. Get best hyperparameters
+## 3. Get best hyperparameters
 
 ```shell
 poetry run allennlp best-params \
@@ -142,7 +147,7 @@ poetry run allennlp best-params \
 ```
 
 
-## 3. Retrain a model with optimized hyperparameters
+## 4. Retrain a model with optimized hyperparameters
 
 ```shell
 poetry run allennlp retrain \
@@ -152,7 +157,7 @@ poetry run allennlp retrain \
 ```
 
 
-## 4. Hyperparameter optimization at scale!
+## 5. Hyperparameter optimization at scale!
 
 you can run optimizations in parallel.
 You can easily run distributed optimization by adding an option
