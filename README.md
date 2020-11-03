@@ -168,7 +168,7 @@ poetry run allennlp tune \
     --skip-if-exists
 ```
 
-AllenOpt uses SQLite as a default storage for storing results.
+allennlp-optuna uses SQLite as a default storage for storing results.
 You can easily run distributed optimization **over machines**
 by using MySQL or PostgreSQL as a storage.
 

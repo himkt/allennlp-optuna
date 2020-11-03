@@ -7,5 +7,5 @@ Best hyperparameter utilities
 
 .. function:: show_best_params
 
-.. autoclass:: AllenOptExport
+.. autoclass:: BestParam
     :members:

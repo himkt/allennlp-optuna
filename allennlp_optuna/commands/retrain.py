@@ -93,7 +93,8 @@ class Retrain(Subcommand):
             "--storage",
             type=str,
             help=(
-                "The path to storage. AllenOpt supports a valid URL" "for sqlite3, mysql, postgresql, or redis."
+                "The path to storage. "
+                "allennlp-optuna supports a valid URL" "for sqlite3, mysql, postgresql, or redis."
             ),
             default="sqlite:///allennlp_optuna.db",
         )

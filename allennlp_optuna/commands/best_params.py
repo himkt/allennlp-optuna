@@ -18,7 +18,7 @@ def show_best_params(args: argparse.Namespace) -> None:
 
 
 @Subcommand.register("best-params")
-class AllenOptExport(Subcommand):
+class BestParam(Subcommand):
     @overrides
     def add_subparser(self, parser: argparse._SubParsersAction) -> argparse.ArgumentParser:
         description = """Export best hyperparameters in the trials."""
@@ -32,7 +32,8 @@ class AllenOptExport(Subcommand):
             "--storage",
             type=str,
             help=(
-                "The path to storage. AllenOpt supports a valid URL" "for sqlite3, mysql, postgresql, or redis."
+                "The path to storage. "
+                "allennlp-optuna supports a valid URL" "for sqlite3, mysql, postgresql, or redis."
             ),
             default="sqlite:///allennlp_optuna.db",
         )

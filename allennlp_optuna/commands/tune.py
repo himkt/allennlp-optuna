@@ -83,7 +83,7 @@ def tune(args: argparse.Namespace) -> None:
 
 
 @Subcommand.register("tune")
-class AllenOpt(Subcommand):
+class Tune(Subcommand):
     @overrides
     def add_subparser(self, parser: argparse._SubParsersAction) -> argparse.ArgumentParser:
         description = """Train the specified model on the specified dataset."""
@@ -156,7 +156,8 @@ class AllenOpt(Subcommand):
             "--storage",
             type=str,
             help=(
-                "The path to storage. AllenOpt supports a valid URL" "for sqlite3, mysql, postgresql, or redis."
+                "The path to storage. "
+                "allennlp-optuna supports a valid URL" "for sqlite3, mysql, postgresql, or redis."
             ),
             default="sqlite:///allennlp_optuna.db",
         )
