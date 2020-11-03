@@ -7,3 +7,5 @@ Commands
     :maxdepth: 2
 
     best_params
+    retrain
+    tune
