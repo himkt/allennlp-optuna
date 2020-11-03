@@ -3,5 +3,5 @@
 Best hyperparameter utilities
 =============================
 
-.. autoclass: AllenOptExport
+.. autoclass:: AllenOptExport
     :members:
