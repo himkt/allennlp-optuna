@@ -3,7 +3,7 @@
 Optimization interface
 ======================
 
-.. py:function:: tune
+.. function:: tune
 
-.. autoclass:: AllenOpt
+.. autoclass:: Tune
     :members:
