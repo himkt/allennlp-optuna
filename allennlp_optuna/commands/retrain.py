@@ -16,7 +16,8 @@ def train_model_from_args_with_optuna(args: argparse.Namespace):
 
 
 @Subcommand.register("retrain")
-class Train(Subcommand):
+class Retrain(Subcommand):
+    """Retraining a model."""
     @overrides
     def add_subparser(self, parser: argparse._SubParsersAction) -> argparse.ArgumentParser:
         description = (
@@ -92,7 +93,8 @@ class Train(Subcommand):
             "--storage",
             type=str,
             help=(
-                "The path to storage. AllenOpt supports a valid URL" "for sqlite3, mysql, postgresql, or redis."
+                "The path to storage. "
+                "allennlp-optuna supports a valid URL" "for sqlite3, mysql, postgresql, or redis."
             ),
             default="sqlite:///allennlp_optuna.db",
         )
