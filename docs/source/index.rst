@@ -10,6 +10,8 @@ Welcome to allennlp-optuna's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+   installation
+   tutorial/index
    reference/index
 
 Indices and tables
