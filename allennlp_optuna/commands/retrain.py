@@ -23,7 +23,7 @@ class Retrain(Subcommand):
         description = (
             """Train the specified model on the specified dataset using hyperparameters found by Optuna."""
         )
-        subparser = parser.add_parser(self.name, description=description, help="Train a model.")
+        subparser = parser.add_parser(self.name, description=description, help="Train a model with hyperparameter found by Optuna.")
 
         subparser.add_argument(
             "param_path", type=str, help="path to parameter file describing the model to be trained"
