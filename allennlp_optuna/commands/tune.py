@@ -24,6 +24,7 @@ def tune(args: argparse.Namespace) -> None:
     hparam_path = args.hparam_path
     optuna_param_path = args.optuna_param_path
     serialization_dir = args.serialization_dir
+    include_package = args.include_package
 
     load_if_exists = args.skip_if_exists
     direction = args.direction
@@ -46,7 +47,13 @@ def tune(args: argparse.Namespace) -> None:
             suggest(**hparam["attributes"])
 
         optuna_serialization_dir = os.path.join(serialization_dir, "trial_{}".format(trial.number))
-        executor = AllenNLPExecutor(trial, config_file, optuna_serialization_dir, metrics=metrics)
+        executor = AllenNLPExecutor(
+            trial,
+            config_file,
+            optuna_serialization_dir,
+            metrics=metrics,
+            include_package=include_package,
+        )
         return executor.run()
 
     if optuna_param_path is not None and os.path.isfile(optuna_param_path):
