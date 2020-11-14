@@ -11,7 +11,7 @@ Then you have to create ``.allennlp_plugins``.
 
 .. code-block:: bash
 
-    echo 'allennlp-optuna' >> .allennlp_plugins
+    echo 'allennlp_optuna' >> .allennlp_plugins
 
 You can check if allennlp-optuna is successfully installed by running ``allennlp --help``.
 
