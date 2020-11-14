@@ -10,9 +10,8 @@ You can optimize hyperparameters by:
 .. code-block:: bash
 
     poetry run allennlp tune \
-        config/imdb_optuna.jsonnet \
-        config/hparams.json \
-        --optuna-param-path config/optuna.json \
+        imdb_optuna.jsonnet \
+        hparams.json \
         --serialization-dir result \
         --study-name test
 
@@ -32,6 +31,6 @@ Retrain a model with optimized hyperparameters
 .. code-block:: bash
 
     poetry run allennlp retrain \
-        config/imdb_optuna.jsonnet \
+        imdb_optuna.jsonnet \
         --serialization-dir retrain_result \
         --study-name test

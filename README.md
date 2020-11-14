@@ -100,7 +100,19 @@ you can see the available parameters in [suggest\_float](https://optuna.readthed
 Please see the [example](./config/hparams.json) in detail.
 
 
-### 2.3 [Optional] Specify Optuna configurations
+### 2.3 Optimize hyperparameters by allennlp cli
+
+
+```shell
+poetry run allennlp tune \
+    config/imdb_optuna.jsonnet \
+    config/hparams.json \
+    --serialization-dir result/hpo \
+    --study-name test
+```
+
+
+### 2.4 [Optional] Specify Optuna configurations
 
 You can choose a pruner/sample implemented in Optuna.
 To specify a pruner/sampler, create a JSON config file
@@ -125,18 +137,43 @@ The example of [optuna.json](./config/optuna.json) looks like:
 }
 ```
 
+And add a epoch callback to your configuration.
+(https://guide.allennlp.org/hyperparameter-optimization#6)
 
-### 2.4 Optimize hyperparameters by allennlp cli
+```
+  epoch_callbacks: [
+    {
+      type: 'optuna_pruner',
+    }
+  ],
+```
 
+- [`config/imdb_optuna.jsonnet`](./config/imdb_optuna.jsonnet) is a simple configuration for allennlp-optuna
+- [`config/imdb_optuna_with_pruning.jsonnet`](./config/imdb_optuna_with_pruning.jsonnet) is a configuration using Optuna pruner (and TPEsampler)
+
+```sh
+$ diff config/imdb_optuna.jsonnet config/imdb_optuna_with_pruning.jsonnet
+32d31
+<   datasets_for_vocab_creation: ['train'],
+58a58,62
+>     epoch_callbacks: [
+>       {
+>         type: 'optuna_pruner',
+>       }
+>     ],
+```
+
+Then, you can use a pruning callback by running following:
 
 ```shell
 poetry run allennlp tune \
-    config/imdb_optuna.jsonnet \
+    config/imdb_optuna_with_pruning.jsonnet \
     config/hparams.json \
     --optuna-param-path config/optuna.json \
-    --serialization-dir result \
-    --study-name test
+    --serialization-dir result/hpo_with_optuna_config \
+    --study-name test_with_pruning
 ```
+
 
 
 ## 3. Get best hyperparameters

@@ -29,7 +29,6 @@ local ngram_filter_sizes = std.range(2, max_filter_size);
       },
     },
   },
-  datasets_for_vocab_creation: ['train'],
   train_data_path: 'https://s3-us-west-2.amazonaws.com/allennlp/datasets/imdb/train.jsonl',
   validation_data_path: 'https://s3-us-west-2.amazonaws.com/allennlp/datasets/imdb/dev.jsonl',
   model: {
@@ -56,6 +55,11 @@ local ngram_filter_sizes = std.range(2, max_filter_size);
   },
   trainer: {
     cuda_device: cuda_device,
+    epoch_callbacks: [
+      {
+        type: 'optuna_pruner',
+      }
+    ],
     num_epochs: num_epochs,
     optimizer: {
       lr: lr,

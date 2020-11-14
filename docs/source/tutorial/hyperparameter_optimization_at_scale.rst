@@ -9,9 +9,9 @@ You can easily run distributed optimization by adding an option
 .. code-block:: bash
 
     poetry run allennlp tune \
-        config/imdb_optuna.jsonnet \
-        config/hparams.json \
-        --optuna-param-path config/optuna.json \
+        imdb_optuna.jsonnet \
+        hparams.json \
+        --optuna-param-path optuna.json \
         --serialization-dir result \
         --study-name test \
         --skip-if-exists
@@ -26,10 +26,10 @@ the command should be like following:
 .. code-block:: bash
 
     poetry run allennlp tune \
-        config/imdb_optuna.jsonnet \
-        config/hparams.json \
-        --optuna-param-path config/optuna.json \
-        --serialization-dir result \
+        imdb_optuna.jsonnet \
+        hparams.json \
+        --optuna-param-path optuna.json \
+        --serialization-dir result/distributed \
         --study-name test \
         --storage mysql://<user_name>:<passwd>@<db_host>/<db_name> \
         --skip-if-exists
