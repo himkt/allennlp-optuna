@@ -2,10 +2,7 @@ Advanced configuration for Optuna
 =================================
 
 You can choose a pruner/sample implemented in Optuna.
-To specify a pruner/sampler, create a JSON config file
-
-The example of `optuna.json <./config/optuna.json>`_ looks like:
-
+To specify a pruner/sampler, create a JSON config file.
 
 - ``optuna.json``
 
@@ -90,6 +87,7 @@ Next, we have to add `optuna_pruner` to `epoch_callbacks`.
     },
     trainer: {
       cuda_device: cuda_device,
+      // NOTE add `optuna_pruner` here!
       epoch_callbacks: [
         {
           type: 'optuna_pruner',
@@ -110,8 +108,8 @@ Finally, you can run optimization with pruning:
 .. code-block:: bash
 
     poetry run allennlp tune \
-        config/imdb_optuna_with_pruning.jsonnet \
-        config/hparams.json \
-        --optuna-param-path config/optuna.json \
+        imdb_optuna_with_pruning.jsonnet \
+        hparams.json \
+        --optuna-param-path optuna.json \
         --serialization-dir result/hpo \
         --study-name test-with-pruning
