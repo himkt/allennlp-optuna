@@ -12,7 +12,6 @@ You can optimize hyperparameters by:
     poetry run allennlp tune \
         config/imdb_optuna.jsonnet \
         config/hparams.json \
-        --optuna-param-path config/optuna.json \
         --serialization-dir result \
         --study-name test
 

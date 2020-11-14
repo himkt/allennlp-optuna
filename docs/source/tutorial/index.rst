@@ -7,6 +7,6 @@ Tutorial
 
    allennlp_configuration
    optuna_search_space
-   advanced_optuna_configuration
    run_allennlp_optuna
+   advanced_optuna_configuration
    hyperparameter_optimization_at_scale
