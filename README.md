@@ -1,12 +1,35 @@
 # AllenNLP subcommand for hyperparameter optimization
 
+`allennlp-optuna` is AllenNLP plugin for hyperparameter optimization using [Optuna](https://github.com/optuna/optuna).
 
-## 0. Documentation
+
+#### Supported environments
+
+Machine \ Device | Single GPU             | Multi GPUs
+---------------- | ---------------------- | ---------------
+Single Node      | :white_check_mark:     | Partial
+Multi Nodes      | :white_check_mark:     | Partial
+
+AllenNLP provides a way of distributed training (https://medium.com/ai2-blog/c4d7c17eb6d6).
+Unfortunately, `allennlp-optuna` doesn't fully support this feature.
+With multiple GPUs, you can run hyperparameter optimization.
+But you cannot enable a pruning feature.
+(For more detail, please see [himkt/allennlp-optuna#20](https://github.com/himkt/allennlp-optuna/issues/20)
+and [optuna/optuna#1990](https://github.com/optuna/optuna/issues/1990))
+
+Alternatively, `allennlp-optuna` supports distributed optimization with multiple machines.
+Please read the [tutorial](https://allennlp-optuna.readthedocs.io/en/latest/tutorial/hyperparameter_optimization_at_scale.html) about
+distributed optimization in `allennlp-optuna`.
+You can also learn about a mechanism of Optuna in the [paper](https://arxiv.org/pdf/1907.10902.pdf)
+or [documentation](https://optuna.readthedocs.io/en/stable/).
+
+
+#### Documentation
 
 You can read the documentation on [readthedocs](https://allennlp-optuna.readthedocs.io/).
 
 
-## 1. Install
+## 1. Installation
 
 ```sh
 pip install allennlp_optuna
@@ -20,7 +43,7 @@ echo 'allennlp-optuna' >> .allennlp_plugins
 ## 2. Optimization
 
 
-### 2.1 AllenNLP config
+### 2.1. AllenNLP config
 
 Model configuration written in Jsonnet.
 
@@ -36,7 +59,7 @@ local lr = std.parseJson(std.extVar('lr'));  // after
 For more information, please refer to [AllenNLP Guide](https://guide.allennlp.org/hyperparameter-optimization).
 
 
-### 2.2 Define hyperparameter search speaces
+### 2.2. Define hyperparameter search speaces
 
 You can define search space in Json.
 
@@ -104,7 +127,7 @@ you can see the available parameters in [suggest\_float](https://optuna.readthed
 Please see the [example](./config/hparams.json) in detail.
 
 
-### 2.3 Optimize hyperparameters by allennlp cli
+### 2.3. Optimize hyperparameters by allennlp cli
 
 
 ```shell
@@ -116,7 +139,7 @@ poetry run allennlp tune \
 ```
 
 
-### 2.4 [Optional] Specify Optuna configurations
+### 2.4. [Optional] Specify Optuna configurations
 
 You can choose a pruner/sample implemented in Optuna.
 To specify a pruner/sampler, create a JSON config file
