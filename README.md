@@ -8,7 +8,7 @@ You can read the documentation on [readthedocs](https://allennlp-optuna.readthed
 
 ## 1. Install
 
-```
+```sh
 pip install allennlp_optuna
 
 # Create .allennlp_plugins at the top of your repository or $HOME/.allennlp/plugins
