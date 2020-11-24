@@ -131,7 +131,7 @@ Please see the [example](./config/hparams.json) in detail.
 
 
 ```shell
-poetry run allennlp tune \
+allennlp tune \
     config/imdb_optuna.jsonnet \
     config/hparams.json \
     --serialization-dir result/hpo \
@@ -193,7 +193,7 @@ $ diff config/imdb_optuna.jsonnet config/imdb_optuna_with_pruning.jsonnet
 Then, you can use a pruning callback by running following:
 
 ```shell
-poetry run allennlp tune \
+allennlp tune \
     config/imdb_optuna_with_pruning.jsonnet \
     config/hparams.json \
     --optuna-param-path config/optuna.json \
@@ -206,7 +206,7 @@ poetry run allennlp tune \
 ## 3. Get best hyperparameters
 
 ```shell
-poetry run allennlp best-params \
+allennlp best-params \
     --study-name test
 ```
 
@@ -214,7 +214,7 @@ poetry run allennlp best-params \
 ## 4. Retrain a model with optimized hyperparameters
 
 ```shell
-poetry run allennlp retrain \
+allennlp retrain \
     config/imdb_optuna.jsonnet \
     --serialization-dir retrain_result \
     --study-name test
@@ -228,7 +228,7 @@ You can easily run distributed optimization by adding an option
 `--skip-if-exists` to `allennlp tune` command.
 
 ```
-poetry run allennlp tune \
+allennlp tune \
     config/imdb_optuna.jsonnet \
     config/hparams.json \
     --optuna-param-path config/optuna.json \
@@ -245,7 +245,7 @@ For example, if you want to use MySQL as a storage,
 the command should be like following:
 
 ```
-poetry run allennlp tune \
+allennlp tune \
     config/imdb_optuna.jsonnet \
     config/hparams.json \
     --optuna-param-path config/optuna.json \
