@@ -36,7 +36,7 @@ pip install allennlp_optuna
 
 # Create .allennlp_plugins at the top of your repository or $HOME/.allennlp/plugins
 # For more information, please see https://github.com/allenai/allennlp#plugins
-echo 'allennlp-optuna' >> .allennlp_plugins
+echo 'allennlp_optuna' >> .allennlp_plugins
 ```
 
 
