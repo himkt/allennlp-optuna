@@ -8,7 +8,7 @@ You can easily run distributed optimization by adding an option
 
 .. code-block:: bash
 
-    poetry run allennlp tune \
+    allennlp tune \
         imdb_optuna.jsonnet \
         hparams.json \
         --optuna-param-path optuna.json \
@@ -25,7 +25,7 @@ the command should be like following:
 
 .. code-block:: bash
 
-    poetry run allennlp tune \
+    allennlp tune \
         imdb_optuna.jsonnet \
         hparams.json \
         --optuna-param-path optuna.json \

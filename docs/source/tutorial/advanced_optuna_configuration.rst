@@ -107,7 +107,7 @@ Finally, you can run optimization with pruning:
 
 .. code-block:: bash
 
-    poetry run allennlp tune \
+    allennlp tune \
         imdb_optuna_with_pruning.jsonnet \
         hparams.json \
         --optuna-param-path optuna.json \
