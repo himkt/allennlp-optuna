@@ -262,3 +262,9 @@ run multi-node distributed optimization.
 If you want to know about a mechanism of Optuna distributed optimization,
 please see the official documentation:
 https://optuna.readthedocs.io/en/stable/tutorial/004_distributed.html
+
+
+#### Reference
+
+- Cookpad Techlife (in Japanese): https://techlife.cookpad.com/entry/2020/11/06/110000
+  - `allennlp-optuna` is used for optimizing hyperparameter of NER model
