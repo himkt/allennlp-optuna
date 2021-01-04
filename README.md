@@ -260,8 +260,7 @@ You can run the above command on each machine to
 run multi-node distributed optimization.
 
 If you want to know about a mechanism of Optuna distributed optimization,
-please see the official documentation:
-https://optuna.readthedocs.io/en/stable/tutorial/004_distributed.html
+please see the official documentation: https://optuna.readthedocs.io/en/latest/tutorial/10_key_features/004_distributed.html
 
 
 #### Reference
