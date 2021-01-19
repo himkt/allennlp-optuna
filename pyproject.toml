@@ -10,7 +10,7 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.6.1"
-allennlp = ">=1.0.0"
+allennlp = "^1.0.0"
 optuna = "^2.4.0"
 
 [tool.poetry.dev-dependencies]

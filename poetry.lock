@@ -11,12 +11,12 @@ category = "main"
 description = "A database migration tool for SQLAlchemy."
 name = "alembic"
 optional = false
-python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "1.4.3"
+python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,!=3.5.*,>=2.7"
+version = "1.5.0"
 
 [package.dependencies]
 Mako = "*"
-SQLAlchemy = ">=1.1.0"
+SQLAlchemy = ">=1.3.0"
 python-dateutil = "*"
 python-editor = ">=0.3"
 
@@ -212,7 +212,7 @@ description = "Command Line Interface Formulation Framework"
 name = "cliff"
 optional = false
 python-versions = ">=3.6"
-version = "3.5.0"
+version = "3.6.0"
 
 [package.dependencies]
 PrettyTable = ">=0.7.2,<0.8"
@@ -220,7 +220,6 @@ PyYAML = ">=3.12"
 cmd2 = ">=0.8.0,<0.8.3 || >0.8.3"
 pbr = ">=2.0.0,<2.1.0 || >2.1.0"
 pyparsing = ">=2.1.0"
-six = ">=1.10.0"
 stevedore = ">=2.0.1"
 
 [[package]]
@@ -1415,7 +1414,7 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["pytest (>=3.5,<3.7.3 || >3.7.3)", "pytest-checkdocs (>=1.2.3)", "pytest-flake8", "pytest-cov", "jaraco.test (>=3.2.0)", "jaraco.itertools", "func-timeout", "pytest-black (>=0.3.7)", "pytest-mypy"]
 
 [metadata]
-content-hash = "25023e8e1eb20722420c559bbdea0fbd6af7c6454290527e0de0582c032d1640"
+content-hash = "a4f69d373b7296645c40874d3a3207622d406f66f98faf4958a0004440af6885"
 lock-version = "1.0"
 python-versions = "^3.6.1"
 
@@ -1425,8 +1424,7 @@ alabaster = [
     {file = "alabaster-0.7.12.tar.gz", hash = "sha256:a661d72d58e6ea8a57f7a86e37d86716863ee5e92788398526d58b26a4e4dc02"},
 ]
 alembic = [
-    {file = "alembic-1.4.3-py2.py3-none-any.whl", hash = "sha256:4e02ed2aa796bd179965041afa092c55b51fb077de19d61835673cc80672c01c"},
-    {file = "alembic-1.4.3.tar.gz", hash = "sha256:5334f32314fb2a56d86b4c4dd1ae34b08c03cae4cb888bc699942104d66bc245"},
+    {file = "alembic-1.5.0.tar.gz", hash = "sha256:b7b3b43adc71447967b5f7bf55d5cc9113bb4e74840b6907d2705b34f2c0f898"},
 ]
 allennlp = [
     {file = "allennlp-1.3.0-py3-none-any.whl", hash = "sha256:d24f43b07ac68fcf0b76ecc0a0239144a132a383a1f45a7aa2fa91159eb0d5a2"},
@@ -1496,8 +1494,8 @@ click = [
     {file = "click-7.1.2.tar.gz", hash = "sha256:d2b5255c7c6349bc1bd1e59e08cd12acbbd63ce649f2588755783aa94dfb6b1a"},
 ]
 cliff = [
-    {file = "cliff-3.5.0-py3-none-any.whl", hash = "sha256:31c2e2bf04d826c2acecf300b48bc0e28e7e030fabe215ac1d8ddba84c321cf9"},
-    {file = "cliff-3.5.0.tar.gz", hash = "sha256:5bfb684b5fcdff0afaaccd1298a376c0e62e644c46b7e9abc034595b41fe1759"},
+    {file = "cliff-3.6.0-py3-none-any.whl", hash = "sha256:32bd9656c6049d8c5536a68620abe4a880f5167edf3cbd1e164dd8dc292d1eb4"},
+    {file = "cliff-3.6.0.tar.gz", hash = "sha256:a3f4fa67eeafbcfa7cf9fe4b1755d410876528e1d0d115740db00b50a1250272"},
 ]
 cmaes = [
     {file = "cmaes-0.7.0-py3-none-any.whl", hash = "sha256:87b0a97da2d8cac6f814f726a508e5e28a64f21e2dd5fe14e37d6444b69b135d"},
