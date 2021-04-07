@@ -17,7 +17,6 @@ local ngram_filter_sizes = std.range(2, max_filter_size);
   pytorch_seed: seed,
   random_seed: seed,
   dataset_reader: {
-    lazy: false,
     type: 'text_classification_json',
     tokenizer: {
       type: 'spacy',
@@ -55,7 +54,7 @@ local ngram_filter_sizes = std.range(2, max_filter_size);
   },
   trainer: {
     cuda_device: cuda_device,
-    epoch_callbacks: [
+    callbacks: [
       {
         type: 'optuna_pruner',
       }
