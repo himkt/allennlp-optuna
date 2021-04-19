@@ -1,10 +1,14 @@
 import argparse
 from overrides import overrides
 import os
+import tempfile
+
+from optuna import load_study
+from optuna.integration.allennlp import dump_best_config
 
 from allennlp.commands.subcommand import Subcommand
 
-from allennlp.commands.train import train_model_from_args
+from allennlp.commands.train import train_model_from_file
 from allennlp_optuna.commands.best_params import fetch_best_params
 
 
@@ -12,7 +16,23 @@ def train_model_from_args_with_optuna(args: argparse.Namespace):
     # Set hyperparameters
     for k, v in fetch_best_params(args.storage, args.study_name).items():
         os.environ[k] = str(v)
-    train_model_from_args(args)
+
+    study = load_study(study_name=args.study_name, storage=args.storage)
+    with tempfile.TemporaryDirectory() as tmp_param_dir:
+        tmp_param_path = os.path.join(tmp_param_dir, "allennlp.jsonnet")
+        dump_best_config(args.param_path, tmp_param_path, study)
+
+        train_model_from_file(
+            parameter_filename=tmp_param_path,
+            serialization_dir=args.serialization_dir,
+            overrides=args.overrides,
+            recover=args.recover,
+            force=args.force,
+            node_rank=0,
+            include_package=args.include_package,
+            dry_run=False,
+            file_friendly_logging=False,
+        )
 
 
 @Subcommand.register("retrain")
