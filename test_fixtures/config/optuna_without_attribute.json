@@ -1,0 +1,8 @@
+{
+    "pruner": {
+        "type": "HyperbandPruner"
+    },
+    "sampler": {
+        "type": "TPESampler"
+    }
+}

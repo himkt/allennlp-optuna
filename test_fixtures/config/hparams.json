@@ -1,0 +1,27 @@
+[
+  {
+    "type": "int",
+    "attributes": {
+      "name": "embedding_dim",
+      "low": 5,
+      "high": 20
+    }
+  },
+  {
+    "type": "float",
+    "attributes": {
+      "name": "dropout",
+      "low": 0.0,
+      "high": 0.5
+    }
+  },
+  {
+    "type": "float",
+    "attributes": {
+      "name": "lr",
+      "low": 5e-3,
+      "high": 5e-1,
+      "log": true
+    }
+  }
+]
