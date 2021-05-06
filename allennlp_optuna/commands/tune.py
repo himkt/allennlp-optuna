@@ -63,13 +63,13 @@ def tune(args: argparse.Namespace) -> None:
 
     if "pruner" in optuna_config:
         pruner_class = getattr(optuna.pruners, optuna_config["pruner"]["type"])
-        pruner = pruner_class(**optuna_config["pruner"]["attributes"])
+        pruner = pruner_class(**optuna_config["pruner"].get("attributes", {}))
     else:
         pruner = None
 
     if "sampler" in optuna_config:
         sampler_class = getattr(optuna.samplers, optuna_config["sampler"]["type"])
-        sampler = sampler_class(optuna_config["sampler"]["attributes"])
+        sampler = sampler_class(optuna_config["sampler"].get("attributes", {}))
     else:
         sampler = None
 
