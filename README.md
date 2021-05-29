@@ -139,6 +139,17 @@ allennlp tune \
     --study-name test
 ```
 
+Optionally, you can specify the metrics and direction you are optimizing for:
+
+```shell
+allennlp tune \
+    config/imdb_optuna.jsonnet \
+    config/hparams.json \
+    --serialization-dir result/hpo \
+    --study-name test \
+    --metrics best_validation_accuracy \
+    --direction maximize
+```
 
 ### 2.4. [Optional] Specify Optuna configurations
 
