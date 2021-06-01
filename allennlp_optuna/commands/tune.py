@@ -12,6 +12,7 @@ from functools import partial
 
 import optuna
 from allennlp.commands.subcommand import Subcommand
+from allennlp.common import cached_transformers
 from optuna import Trial
 from optuna.integration import AllenNLPExecutor
 from overrides import overrides
@@ -45,6 +46,14 @@ def tune(args: argparse.Namespace) -> None:
             attr_type = hparam["type"]
             suggest = getattr(trial, "suggest_{}".format(attr_type))
             suggest(**hparam["attributes"])
+
+        # Without the following lines, the transformer model construction only takes place in the
+        # first trial (which would consume some random numbers), and the cached model will be used
+        # in trials afterwards (which would not consume random numbers), leading to inconsistent
+        # results between `allennlp tune` and `allennlp retrain`. To make `allennlp tune` results
+        # reproducible by `allennlp retrain`, we clear the cache before each trial.
+        cached_transformers._model_cache.clear()
+        cached_transformers._tokenizer_cache.clear()
 
         optuna_serialization_dir = os.path.join(serialization_dir, "trial_{}".format(trial.number))
         executor = AllenNLPExecutor(
