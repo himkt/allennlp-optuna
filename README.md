@@ -180,7 +180,7 @@ And add a epoch callback to your configuration.
 (https://guide.allennlp.org/hyperparameter-optimization#6)
 
 ```
-  epoch_callbacks: [
+  callbacks: [
     {
       type: 'optuna_pruner',
     }
@@ -195,7 +195,7 @@ $ diff config/imdb_optuna.jsonnet config/imdb_optuna_with_pruning.jsonnet
 32d31
 <   datasets_for_vocab_creation: ['train'],
 58a58,62
->     epoch_callbacks: [
+>     callbacks: [
 >       {
 >         type: 'optuna_pruner',
 >       }
