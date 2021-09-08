@@ -1,4 +1,4 @@
-# AllenNLP subcommand for hyperparameter optimization
+# allennlp-optuna: Hyperparameter Optimization Library for AllenNLP
 
 `allennlp-optuna` is [AllenNLP](https://github.com/allenai/allennlp) plugin for
 hyperparameter optimization using [Optuna](https://github.com/optuna/optuna).
