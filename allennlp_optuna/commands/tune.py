@@ -33,6 +33,7 @@ def tune(args: argparse.Namespace) -> None:
     study_name = args.study_name
     storage = args.storage
     metrics = args.metrics
+    skip_exception = args.skip_exception
 
     os.makedirs(serialization_dir, exist_ok=True)
 
@@ -86,7 +87,12 @@ def tune(args: argparse.Namespace) -> None:
         _objective,
         hparam_path=hparam_path,
     )
-    study.optimize(objective, n_trials=n_trials, timeout=timeout)
+    study.optimize(
+        objective,
+        n_trials=n_trials,
+        timeout=timeout,
+        catch=(Exception,) if skip_exception else (),
+    )
 
 
 @Subcommand.register("tune")
@@ -174,6 +180,15 @@ class Tune(Subcommand):
             type=str,
             help="The metrics you want to optimize.",
             default="best_validation_loss",
+        )
+
+        subparser.add_argument(
+            "--skip-exception",
+            action="store_true",
+            help=(
+                "If this option is specified, optimization won't stop even when it catches an exception."
+                " Note that this option is experimental and it could be changed or removed in future development."
+            ),
         )
 
         subparser.set_defaults(func=tune)
