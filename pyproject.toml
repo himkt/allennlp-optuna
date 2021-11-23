@@ -3,7 +3,7 @@ line-length = 115  # same as allennlp
 
 [tool.poetry]
 name = "allennlp_optuna"
-version = "0.1.6"
+version = "0.1.7"
 description = "AllenNLP integration for hyperparameter optimization"
 authors = ["himkt <himkt@klis.tsukuba.ac.jp>"]
 readme = "README.md"
